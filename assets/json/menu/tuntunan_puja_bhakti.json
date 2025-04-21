@@ -1,0 +1,15 @@
+{
+  "title": "Tuntunan Puja Bhakti",
+  "menus": [
+    {
+      "id": "namakara_patha",
+      "title": "Namakara Patta",
+      "description": "Syair Penghormatan"
+    },
+    {
+      "id": "puja_katha",
+      "title": "Puja Katha",
+      "description": "Syair Penghormatan"
+    }
+  ]
+}

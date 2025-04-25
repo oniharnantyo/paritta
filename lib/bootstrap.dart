@@ -21,25 +21,30 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
 
+  final menuService = MenuService(sharedPreferences: SharedPreferencesAsync());
+
   runApp(
-    MultiRepositoryProvider(providers: [
-      RepositoryProvider<MenuRepository>(
-        create: (context) => LocalMenuRepository(
-          menuService: MenuService(),
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<MenuRepository>(
+          create: (context) => LocalMenuRepository(
+            menuService: menuService,
+          ),
         ),
-      ),
-      RepositoryProvider<ParittaRepository>(
-        create: (context) => LocalParittaRepository(
-          parittaService: ParittaService(),
-          menuService: MenuService(),
+        RepositoryProvider<ParittaRepository>(
+          create: (context) => LocalParittaRepository(
+            parittaService: ParittaService(),
+            menuService: menuService,
+          ),
         ),
-      ),
-      RepositoryProvider<ReaderConfigRepository>(
-        create: (context) => LocalReaderConfigRepository(
-          readerConfigService:
-              ReaderConfigService(sharedPreferences: SharedPreferencesAsync()),
+        RepositoryProvider<ReaderConfigRepository>(
+          create: (context) => LocalReaderConfigRepository(
+            readerConfigService: ReaderConfigService(
+                sharedPreferences: SharedPreferencesAsync()),
+          ),
         ),
-      ),
-    ], child: await builder()),
+      ],
+      child: await builder(),
+    ),
   );
 }

@@ -6,7 +6,7 @@
         "id": "tuntunan_puja_bhakti",
         "title": "Tuntunan Puja Bhakti",
         "description": "",
-        "icon": "assets/images/tuntunan_puja_bhakti.png"
+        "image": "assets/images/tuntunan_puja_bhakti.png"
       }
     ]
   },
@@ -17,97 +17,97 @@
         "id": "tujuh_bulan_kandungan",
         "title": "Tujuh Bulan Kandungan",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "menjelang_kelahiran",
         "title": "Menjelang Kelahiran",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "pemberkahan_kelahiran",
         "title": "Pemberkahan Kelahiran",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "ulang_tahun_turun_tanah",
         "title": "Ulang Tahun, Turun Tanah",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "potong_rambut",
         "title": "Potong Rambut",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "wisuda_upasaka_upasika",
         "title": "Wisuda Upāsaka/Upāsikā",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "upacara_pernikahan",
         "title": "Upacara Pernikahan",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "meletakkan_batu_pertama_pembangunan",
         "title": "Meletakkan Batu Pertama Pembangunan",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "menempati_rumah_baru_pembukaan_toko_perusahaan_pabrik",
         "title": "Menempati Rumah Baru, Pembukaan Toko, Perusahaan, Pabrik dan Lain-lain",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "membersihkan_suasana_tempat",
         "title": "Membersihkan Suasana/Tempat",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "air_untuk_obat_orang_sakit",
         "title": "Air untuk Obat Orang Sakit",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "tanam_di_sawah_pemberkahan_benih",
         "title": "Tanam di Sawah (Pemberkahan Benih)",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "pengukuhan_janji_jabatan",
         "title": "Pengukuhan Janji Jabatan",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "pengukuhan_janji_di_pengadilan",
         "title": "Pengukuhan Janji di Pengadilan",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "upacara_kematian",
         "title": "Upacara Kematian",
         "description": "",
-        "icon": ""
+        "image": ""
       },
       {
         "id": "peringatan_kematian",
         "title": "Peringatan Kematian",
         "description": "",
-        "icon": ""
+        "image": ""
       }
     ]
   }

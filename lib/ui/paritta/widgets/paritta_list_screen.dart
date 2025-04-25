@@ -55,8 +55,8 @@ class ParittaListScreen extends StatelessWidget {
                       itemBuilder: (_, index) {
                         final menu = state.menu?.menus[index];
                         return ListTile(
-                          title: Text(menu!.title),
-                          subtitle: Text(menu.description ?? ''),
+                          title: Text(menu?.title ?? ''),
+                          subtitle: Text(menu?.description ?? ''),
                           onTap: () => context.push(
                             Uri(
                               path: '/paritta/list/$menuId/reader',

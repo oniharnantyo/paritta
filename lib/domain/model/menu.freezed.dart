@@ -165,7 +165,8 @@ mixin _$MenuItem {
   String get id;
   String get title;
   String? get description;
-  String? get icon;
+  String? get image;
+  bool? get isFavorite;
 
   /// Create a copy of MenuItem
   /// with the given fields replaced by the non-null parameter values.
@@ -183,15 +184,18 @@ mixin _$MenuItem {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.icon, icon) || other.icon == icon));
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, icon);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, image, isFavorite);
 
   @override
   String toString() {
-    return 'MenuItem(id: $id, title: $title, description: $description, icon: $icon)';
+    return 'MenuItem(id: $id, title: $title, description: $description, image: $image, isFavorite: $isFavorite)';
   }
 }
 
@@ -200,7 +204,12 @@ abstract mixin class $MenuItemCopyWith<$Res> {
   factory $MenuItemCopyWith(MenuItem value, $Res Function(MenuItem) _then) =
       _$MenuItemCopyWithImpl;
   @useResult
-  $Res call({String id, String title, String? description, String? icon});
+  $Res call(
+      {String id,
+      String title,
+      String? description,
+      String? image,
+      bool? isFavorite});
 }
 
 /// @nodoc
@@ -218,7 +227,8 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = freezed,
-    Object? icon = freezed,
+    Object? image = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -233,10 +243,14 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: freezed == icon
-          ? _self.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      image: freezed == image
+          ? _self.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFavorite: freezed == isFavorite
+          ? _self.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -245,7 +259,11 @@ class _$MenuItemCopyWithImpl<$Res> implements $MenuItemCopyWith<$Res> {
 
 class _MenuItem implements MenuItem {
   const _MenuItem(
-      {required this.id, required this.title, this.description, this.icon});
+      {required this.id,
+      required this.title,
+      this.description,
+      this.image,
+      this.isFavorite});
 
   @override
   final String id;
@@ -254,7 +272,9 @@ class _MenuItem implements MenuItem {
   @override
   final String? description;
   @override
-  final String? icon;
+  final String? image;
+  @override
+  final bool? isFavorite;
 
   /// Create a copy of MenuItem
   /// with the given fields replaced by the non-null parameter values.
@@ -273,15 +293,18 @@ class _MenuItem implements MenuItem {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.icon, icon) || other.icon == icon));
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, icon);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, description, image, isFavorite);
 
   @override
   String toString() {
-    return 'MenuItem(id: $id, title: $title, description: $description, icon: $icon)';
+    return 'MenuItem(id: $id, title: $title, description: $description, image: $image, isFavorite: $isFavorite)';
   }
 }
 
@@ -292,7 +315,12 @@ abstract mixin class _$MenuItemCopyWith<$Res>
       __$MenuItemCopyWithImpl;
   @override
   @useResult
-  $Res call({String id, String title, String? description, String? icon});
+  $Res call(
+      {String id,
+      String title,
+      String? description,
+      String? image,
+      bool? isFavorite});
 }
 
 /// @nodoc
@@ -310,7 +338,8 @@ class __$MenuItemCopyWithImpl<$Res> implements _$MenuItemCopyWith<$Res> {
     Object? id = null,
     Object? title = null,
     Object? description = freezed,
-    Object? icon = freezed,
+    Object? image = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_MenuItem(
       id: null == id
@@ -325,10 +354,14 @@ class __$MenuItemCopyWithImpl<$Res> implements _$MenuItemCopyWith<$Res> {
           ? _self.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      icon: freezed == icon
-          ? _self.icon
-          : icon // ignore: cast_nullable_to_non_nullable
+      image: freezed == image
+          ? _self.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFavorite: freezed == isFavorite
+          ? _self.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

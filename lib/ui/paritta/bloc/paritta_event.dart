@@ -11,6 +11,33 @@ final class MainMenuRequested extends ParittaEvent {
   const MainMenuRequested();
 }
 
+final class FavoriteMenuAdded extends ParittaEvent {
+  const FavoriteMenuAdded(this.menuItem);
+
+  final MenuItem menuItem;
+
+  @override
+  List<Object> get props => [menuItem];
+}
+
+final class FavoriteMenuDeleted extends ParittaEvent {
+  const FavoriteMenuDeleted(this.menuItemId);
+
+  final String menuItemId;
+
+  @override
+  List<Object> get props => [menuItemId];
+}
+
+final class LastReadMenuSaved extends ParittaEvent {
+  const LastReadMenuSaved(this.menuItem);
+
+  final MenuItem menuItem;
+
+  @override
+  List<Object> get props => [menuItem];
+}
+
 final class ParittaMenuRequested extends ParittaEvent {
   const ParittaMenuRequested(this.menuId);
 

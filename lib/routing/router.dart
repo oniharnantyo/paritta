@@ -4,7 +4,8 @@ import 'package:paritta_app/domain/repository/menu_repository.dart';
 import 'package:paritta_app/domain/repository/paritta_repository.dart';
 import 'package:paritta_app/domain/repository/reader_config_repository.dart';
 import 'package:paritta_app/routing/routes.dart';
-import 'package:paritta_app/ui/home/cubit/home_cubit.dart';
+import 'package:paritta_app/ui/home/cubit/home_bloc.dart';
+import 'package:paritta_app/ui/home/cubit/home_tab_cubit.dart';
 import 'package:paritta_app/ui/home/widgets/home_screen.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_bloc.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_reader_bloc.dart';
@@ -27,7 +28,10 @@ GoRouter router() {
                   menuRepository: context.read<MenuRepository>(),
                 ),
               ),
-              BlocProvider(create: (context) => HomeCubit()),
+              BlocProvider<HomeBloc>(
+                  create: (context) => HomeBloc(menuRepository: context.read())
+                    ..add(const FavoriteMenusRequested())),
+              BlocProvider(create: (context) => HomeTabCubit()),
             ],
             child: const HomeScreen(),
           );

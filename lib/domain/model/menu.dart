@@ -16,6 +16,7 @@ abstract class MenuItem with _$MenuItem {
     required String id,
     required String title,
     String? description,
-    String? icon,
+    String? image,
+    bool? isFavorite,
   }) = _MenuItem;
 }

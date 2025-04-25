@@ -70,7 +70,7 @@ class ParittaScreen extends StatelessWidget {
                                 horizontal: 4, vertical: 0),
                             child: Text(
                               menu.title ?? '',
-                              style: Theme.of(context).textTheme.titleLarge,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ),
                         ),
@@ -82,6 +82,9 @@ class ParittaScreen extends StatelessWidget {
                               clipBehavior: Clip.hardEdge,
                               child: InkWell(
                                 onTap: () {
+                                  context
+                                      .read<ParittaBloc>()
+                                      .add(LastReadMenuSaved(_menu));
                                   context.push(
                                     Uri(
                                       path: '/paritta/list/${_menu.id}',
@@ -92,18 +95,61 @@ class ParittaScreen extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(16),
-                                        bottomRight: Radius.circular(16),
-                                      ),
-                                      child: AspectRatio(
-                                        aspectRatio: 4 / 3, // square image
-                                        child: Image.asset(
-                                          'assets/images/tuntunan_puja_bhakti.png',
-                                          fit: BoxFit.cover,
+                                    Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(16),
+                                            bottomRight: Radius.circular(16),
+                                          ),
+                                          child: AspectRatio(
+                                            aspectRatio: 4 / 3, // square image
+                                            child: Image.asset(
+                                              'assets/images/tuntunan_puja_bhakti.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            IconButton.filledTonal(
+                                              onPressed: () {
+                                                if (_menu.isFavorite ?? false) {
+                                                  context
+                                                      .read<ParittaBloc>()
+                                                      .add(FavoriteMenuDeleted(
+                                                          _menu.id));
+                                                } else {
+                                                  context
+                                                      .read<ParittaBloc>()
+                                                      .add(FavoriteMenuAdded(
+                                                          _menu));
+                                                }
+                                              },
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 3,
+                                                      vertical: 3),
+                                              constraints: const BoxConstraints(
+                                                  maxHeight: 24, maxWidth: 24),
+                                              icon: const Icon(
+                                                Icons.favorite_border,
+                                                size: 18,
+                                              ),
+                                              isSelected: _menu.isFavorite,
+                                              selectedIcon: const Icon(
+                                                Icons.favorite,
+                                                color: Colors.redAccent,
+                                                size: 18,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                     ListTile(
                                       title: Text(

@@ -16,6 +16,9 @@ class ParittaBloc extends Bloc<ParittaEvent, ParittaState> {
         _menuRepository = menuRepository,
         super(const ParittaState()) {
     on<MainMenuRequested>(_onMainMenuRequested);
+    on<FavoriteMenuAdded>(_onFavoriteMenuAdded);
+    on<FavoriteMenuDeleted>(_onFavoriteMenuDeleted);
+    on<LastReadMenuSaved>(_onLastReadMenuSaved);
     on<ParittaMenuRequested>(_onParittaMenuRequested);
     on<ParittaRequested>(_onParittaRequested);
     on<ParittasRequested>(_onParittasRequested);
@@ -30,6 +33,63 @@ class ParittaBloc extends Bloc<ParittaEvent, ParittaState> {
   ) async {
     emit(state.copyWith(status: ParittaStatus.loading));
     try {
+      final menus = await _menuRepository.getMainMenus();
+      emit(state.copyWith(status: ParittaStatus.success, menus: menus));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          status: ParittaStatus.error,
+          error: error.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onFavoriteMenuAdded(
+    FavoriteMenuAdded event,
+    Emitter<ParittaState> emit,
+  ) async {
+    emit(state.copyWith(status: ParittaStatus.loading));
+    try {
+      await _menuRepository.addFavoriteMenu(event.menuItem);
+      final menus = await _menuRepository.getMainMenus();
+      emit(state.copyWith(status: ParittaStatus.success, menus: menus));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          status: ParittaStatus.error,
+          error: error.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onFavoriteMenuDeleted(
+    FavoriteMenuDeleted event,
+    Emitter<ParittaState> emit,
+  ) async {
+    emit(state.copyWith(status: ParittaStatus.loading));
+    try {
+      await _menuRepository.deleteFavoriteMenu(event.menuItemId);
+      final menus = await _menuRepository.getMainMenus();
+      emit(state.copyWith(status: ParittaStatus.success, menus: menus));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          status: ParittaStatus.error,
+          error: error.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onLastReadMenuSaved(
+    LastReadMenuSaved event,
+    Emitter<ParittaState> emit,
+  ) async {
+    emit(state.copyWith(status: ParittaStatus.loading));
+    try {
+      await _menuRepository.saveLastReadMenu(event.menuItem);
       final menus = await _menuRepository.getMainMenus();
       emit(state.copyWith(status: ParittaStatus.success, menus: menus));
     } catch (error) {

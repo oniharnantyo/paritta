@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'home_state.dart';
+part 'home_tab_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(const HomeState());
+class HomeTabCubit extends Cubit<HomeTabState> {
+  HomeTabCubit() : super(const HomeTabState());
 
   void setTab(int index) {
     var tab = HomeTab.home;
@@ -16,6 +16,6 @@ class HomeCubit extends Cubit<HomeState> {
       case 2:
         tab = HomeTab.guide;
     }
-    emit(HomeState(tab: tab));
+    emit(HomeTabState(tab: tab));
   }
 }

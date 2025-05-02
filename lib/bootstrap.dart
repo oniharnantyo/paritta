@@ -3,12 +3,16 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:paritta_app/app/cubit/app_cubit.dart';
+import 'package:paritta_app/data/repository/local_app_config_repository.dart';
 import 'package:paritta_app/data/repository/local_menu_repository.dart';
 import 'package:paritta_app/data/repository/local_paritta_repository.dart';
 import 'package:paritta_app/data/repository/local_reader_config_repository.dart';
+import 'package:paritta_app/data/service/app_config_service.dart';
 import 'package:paritta_app/data/service/menu_service.dart';
 import 'package:paritta_app/data/service/paritta_service.dart';
 import 'package:paritta_app/data/service/reader_config_service.dart';
+import 'package:paritta_app/domain/repository/app_config_repository.dart';
 import 'package:paritta_app/domain/repository/menu_repository.dart';
 import 'package:paritta_app/domain/repository/paritta_repository.dart';
 import 'package:paritta_app/domain/repository/reader_config_repository.dart';
@@ -43,8 +47,20 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
                 sharedPreferences: SharedPreferencesAsync()),
           ),
         ),
+        RepositoryProvider<AppConfigRepository>(
+          create: (context) => LocalAppConfigRepository(
+            appConfigService: AppConfigService(
+              sharedPreferences: SharedPreferencesAsync(),
+            ),
+          ),
+        ),
       ],
-      child: await builder(),
+      child: BlocProvider(
+        create: (context) =>
+            AppCubit(appConfigRepostory: context.read<AppConfigRepository>())
+              ..getAppConfig(),
+        child: await builder(),
+      ),
     ),
   );
 }

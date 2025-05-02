@@ -9,6 +9,8 @@ class ParittaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return BlocListener<ParittaBloc, ParittaState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
@@ -41,14 +43,15 @@ class ParittaScreen extends StatelessWidget {
                     return FlexibleSpaceBar(
                       title: isCollapsed ? const Text('Paritta') : null,
                       centerTitle: true,
-                      background: const Column(
+                      background: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("Paritta", style: TextStyle(fontSize: 24)),
+                          Text('Paritta', style: textTheme.headlineMedium),
                           Padding(
                             padding: EdgeInsets.all(16),
                             child: SearchBar(
                               leading: Icon(Icons.search),
+                              hintText: 'Cari paritta',
                             ),
                           ),
                         ],

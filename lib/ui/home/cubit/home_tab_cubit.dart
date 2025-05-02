@@ -15,6 +15,8 @@ class HomeTabCubit extends Cubit<HomeTabState> {
         tab = HomeTab.paritta;
       case 2:
         tab = HomeTab.guide;
+      case 3:
+        tab = HomeTab.setting;
     }
     emit(HomeTabState(tab: tab));
   }

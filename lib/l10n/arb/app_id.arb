@@ -1,11 +1,11 @@
 {
-  "@@locale": "en",
-  "homeNavbarTitle": "Home",
+  "@@locale": "id",
+  "homeNavbarTitle": "Beranda",
   "parittaNavbarTitle": "Paritta",
-  "guideNavbarTitle": "Guide",
-  "settingNavbarTitle": "Setting",
-  "homeLastRead": "Last Read",
-  "homeFavorite": "Favorite",
+  "guideNavbarTitle": "Panduan",
+  "settingNavbarTitle": "Pengaturan",
+  "homeLastRead": "Terakhir Dibaca",
+  "homeFavorite": "Favorit",
   "homeDate": "{date}",
   "@homeDate": {
     "placeholders": {

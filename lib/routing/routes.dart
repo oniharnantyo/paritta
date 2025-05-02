@@ -3,4 +3,5 @@ abstract final class Routes {
   static const String parittaList = '/paritta/list/:menuId';
   static const String parittaListReader = '/paritta/list/:menuId/reader';
   static const String parittaReader = '/paritta/reader/:parittaId';
+  static const String setting = '/setting';
 }

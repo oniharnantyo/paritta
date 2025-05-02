@@ -1,11 +1,9 @@
 part of 'home_tab_cubit.dart';
 
-enum HomeTab { home, paritta, guide }
+enum HomeTab { home, paritta, guide, setting }
 
 final class HomeTabState extends Equatable {
-  const HomeTabState({
-    this.tab = HomeTab.home,
-  });
+  const HomeTabState({this.tab = HomeTab.home});
 
   final HomeTab tab;
 

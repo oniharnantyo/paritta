@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
-import 'app_localizations_es.dart';
+import 'app_localizations_id.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,14 +92,50 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('es')
+    Locale('id')
   ];
 
-  /// Text shown in the AppBar of the Counter Page
+  /// No description provided for @homeNavbarTitle.
   ///
   /// In en, this message translates to:
-  /// **'Counter'**
-  String get counterAppBarTitle;
+  /// **'Home'**
+  String get homeNavbarTitle;
+
+  /// No description provided for @parittaNavbarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paritta'**
+  String get parittaNavbarTitle;
+
+  /// No description provided for @guideNavbarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guide'**
+  String get guideNavbarTitle;
+
+  /// No description provided for @settingNavbarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting'**
+  String get settingNavbarTitle;
+
+  /// No description provided for @homeLastRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Read'**
+  String get homeLastRead;
+
+  /// No description provided for @homeFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get homeFavorite;
+
+  /// No description provided for @homeDate.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}'**
+  String homeDate(DateTime date);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -111,7 +147,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'es'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'id'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -123,7 +159,7 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return AppLocalizationsEn();
-    case 'es': return AppLocalizationsEs();
+    case 'id': return AppLocalizationsId();
   }
 
   throw FlutterError(

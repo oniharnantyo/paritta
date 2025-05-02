@@ -76,41 +76,42 @@ class ParittaReaderScreen extends StatelessWidget {
 
   Widget _bottomSheet(ParittaReaderBloc bloc) {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const Text(
-                'Font Size',
-                style: TextStyle(fontSize: 16),
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text('T', style: TextStyle(fontSize: 16)),
-                  Text('T', style: TextStyle(fontSize: 32)),
-                ],
-              ),
-              BlocBuilder<ParittaReaderBloc, ParittaReaderState>(
-                bloc: bloc,
-                builder: (context, state) {
-                  return Slider(
-                    value: state.readerConfig?.fontSize ?? defaultFontSize,
-                    min: 16,
-                    max: 32,
-                    divisions: 6,
-                    onChanged: (value) => bloc.add(
-                      ParittaReaderConfigSaved(ReaderConfig(fontSize: value)),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ));
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Font Size',
+              style: TextStyle(fontSize: 16),
+            ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('T', style: TextStyle(fontSize: 16)),
+                Text('T', style: TextStyle(fontSize: 32)),
+              ],
+            ),
+            BlocBuilder<ParittaReaderBloc, ParittaReaderState>(
+              bloc: bloc,
+              builder: (context, state) {
+                return Slider(
+                  value: state.readerConfig?.fontSize ?? defaultFontSize,
+                  min: 16,
+                  max: 32,
+                  divisions: 6,
+                  onChanged: (value) => bloc.add(
+                    ParittaReaderConfigSaved(ReaderConfig(fontSize: value)),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

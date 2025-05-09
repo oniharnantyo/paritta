@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -10,6 +11,7 @@ class ParittaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final i10n = AppLocalizations.of(context);
 
     return BlocListener<ParittaBloc, ParittaState>(
       listenWhen: (previous, current) => previous.status != current.status,
@@ -50,8 +52,8 @@ class ParittaScreen extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(16),
                             child: SearchBar(
-                              leading: Icon(Icons.search),
-                              hintText: 'Cari paritta',
+                              leading: const Icon(Icons.search),
+                              hintText: i10n.parittaSearchParitta,
                             ),
                           ),
                         ],
@@ -69,8 +71,7 @@ class ParittaScreen extends StatelessWidget {
                       children: [
                         SliverToBoxAdapter(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 4, vertical: 0),
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Text(
                               menu.title ?? '',
                               style: Theme.of(context).textTheme.titleMedium,
@@ -179,7 +180,6 @@ class ParittaScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SliverFillRemaining(),
             ],
           );
         },

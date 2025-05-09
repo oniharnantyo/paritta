@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:paritta_app/app/cubit/app_cubit.dart';
 import 'package:paritta_app/domain/model/app_config.dart';
+import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/setting/bloc/setting_bloc.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final i10n = AppLocalizations.of(context);
 
     final themeData = SettingsThemeData(
       leadingIconsColor: colorScheme.onSurface,
@@ -28,7 +30,7 @@ class SettingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pengaturan'),
+        title: Text(i10n.setting),
       ),
       body: BlocListener<SettingBloc, SettingState>(
         listener: (context, state) {
@@ -45,13 +47,13 @@ class SettingScreen extends StatelessWidget {
             String themeValue;
             switch (state.appConfig?.theme) {
               case ThemeMode.light:
-                themeValue = 'Terang';
+                themeValue = i10n.settingLight;
               case ThemeMode.dark:
-                themeValue = 'Gelap';
+                themeValue = i10n.settingDark;
               case ThemeMode.system:
-                themeValue = 'Sistem';
+                themeValue = i10n.settingSystem;
               case null:
-                themeValue = 'Sistem';
+                themeValue = i10n.settingSystem;
             }
 
             String languageValue;
@@ -69,11 +71,11 @@ class SettingScreen extends StatelessWidget {
               darkTheme: themeData,
               sections: [
                 SettingsSection(
-                  title: Text('Umum'),
+                  title: Text(i10n.settingCommon),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
-                      leading: Icon(Icons.language),
-                      title: Text('Language'),
+                      leading: const Icon(Icons.language),
+                      title: Text(i10n.settingLanguage),
                       value: Text(languageValue),
                       onPressed: (context) {
                         final bloc = context.read<SettingBloc>();
@@ -85,7 +87,7 @@ class SettingScreen extends StatelessWidget {
                           builder: (modalContext) {
                             return BlocProvider.value(
                               value: bloc,
-                              child: _languageBottomSheet(bloc, appCubit),
+                              child: _languageBottomSheet(bloc, appCubit, i10n),
                             );
                           },
                         );
@@ -94,11 +96,11 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ),
                 SettingsSection(
-                  title: Text('Tampilan'),
+                  title: Text(i10n.settingDisplay),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
-                      leading: Icon(Icons.brightness_4_outlined),
-                      title: Text('Tema'),
+                      leading: const Icon(Icons.brightness_4_outlined),
+                      title: Text(i10n.settingTheme),
                       value: Text(themeValue),
                       onPressed: (context) {
                         final bloc = context.read<SettingBloc>();
@@ -110,7 +112,7 @@ class SettingScreen extends StatelessWidget {
                           builder: (modalContext) {
                             return BlocProvider.value(
                               value: bloc,
-                              child: _themeBottomSheet(bloc, appCubit),
+                              child: _themeBottomSheet(bloc, appCubit, i10n),
                             );
                           },
                         );
@@ -119,11 +121,11 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ),
                 SettingsSection(
-                  title: Text('Lain-lain'),
+                  title: Text(i10n.settingMiscellaneous),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
                       leading: Icon(Icons.info),
-                      title: Text('Tentang'),
+                      title: Text(i10n.settingAbout),
                       onPressed: (context) => showAboutDialog(
                         context: context,
                         applicationName: 'Paritta',
@@ -140,7 +142,8 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _themeBottomSheet(SettingBloc bloc, AppCubit appCubit) {
+  Widget _themeBottomSheet(
+      SettingBloc bloc, AppCubit appCubit, AppLocalizations i10n) {
     bloc.add(const SettingAppConfigRequested());
 
     return Padding(
@@ -164,15 +167,15 @@ class SettingScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(24, 0, 0, 0),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
                     child: Text(
-                      'Pilih Tema',
-                      style: TextStyle(fontSize: 16),
+                      i10n.settingChooseTheme,
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                   ListTile(
-                    title: const Text('Terang'),
+                    title: Text(i10n.settingLight),
                     leading: Radio<ThemeMode>(
                       value: ThemeMode.light,
                       groupValue: state.appConfig?.theme,
@@ -184,7 +187,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: const Text('Gelap'),
+                    title: Text(i10n.settingDark),
                     leading: Radio<ThemeMode>(
                       value: ThemeMode.dark,
                       groupValue: state.appConfig?.theme,
@@ -196,7 +199,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: const Text('Sesuai Sistem'),
+                    title: Text(i10n.settingSystem),
                     leading: Radio<ThemeMode>(
                       value: ThemeMode.system,
                       groupValue: state.appConfig?.theme,
@@ -216,7 +219,8 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget _languageBottomSheet(SettingBloc bloc, AppCubit appCubit) {
+  Widget _languageBottomSheet(
+      SettingBloc bloc, AppCubit appCubit, AppLocalizations i10n) {
     bloc.add(const SettingAppConfigRequested());
 
     return Padding(
@@ -241,11 +245,11 @@ class SettingScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(24, 0, 0, 0),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 0, 0),
                     child: Text(
-                      'Pilih Bahasa',
-                      style: TextStyle(fontSize: 16),
+                      i10n.settingChooseLanguage,
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                   ListTile(

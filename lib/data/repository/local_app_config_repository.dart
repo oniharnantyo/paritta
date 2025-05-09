@@ -35,8 +35,6 @@ class LocalAppConfigRepository extends AppConfigRepository {
         language: appConfig.language.name,
       );
 
-      print('app config repo ${appConfig}');
-      
       await _appConfigService.save(appConfigModel);
     } catch (error) {
       _log.severe(error);

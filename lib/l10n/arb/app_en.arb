@@ -6,6 +6,8 @@
   "settingNavbarTitle": "Setting",
   "homeLastRead": "Last Read",
   "homeFavorite": "Favorite",
+  "homeNoLastReadParitta": "Start reading a Paritta to see it here",
+  "homeNoFavoriteParitta": "Your favorite Parittas will appear here",
   "homeDate": "{date}",
   "@homeDate": {
     "placeholders": {
@@ -14,5 +16,20 @@
         "format": "yMMMMEEEEd"
       }
     }
-  }
+  },
+  "parittaSearchParitta": "Cari Paritta",
+  "setting": "Setting",
+  "settingCommon": "Common",
+  "settingLanguage": "Language",
+  "settingChooseLanguage": "Choose Language",
+  "settingDisplay": "Display",
+  "settingTheme": "Theme",
+  "settingChooseTheme": "Choose Theme",
+  "settingLight": "Light",
+  "settingDark": "Dark",
+  "settingSystem": "System",
+  "settingMiscellaneous": "Miscellaneous",
+  "settingAbout": "About",
+  "read": "Read",
+  "fontSize": "Font Size"
 }

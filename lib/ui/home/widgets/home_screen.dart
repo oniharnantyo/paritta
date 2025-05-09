@@ -51,19 +51,19 @@ class HomeScreen extends StatelessWidget {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: i10n.homeNavbarTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
+            icon: const Icon(Icons.menu_book),
             label: i10n.parittaNavbarTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map),
+            icon: const Icon(Icons.map),
             label: i10n.guideNavbarTitle,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             label: i10n.settingNavbarTitle,
           ),
         ],
@@ -187,7 +187,7 @@ class HomePage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Terakhir Dibaca',
+                        i10n.homeLastRead,
                         style: textTheme.titleMedium,
                       )
                     ],
@@ -200,8 +200,8 @@ class HomePage extends StatelessWidget {
                       }
 
                       if (state.lastReadMenu == null) {
-                        return const Center(
-                          child: Text('Belum ada paritta yang dibaca'),
+                        return Center(
+                          child: Text(i10n.homeNoLastReadParitta),
                         );
                       }
 
@@ -218,7 +218,15 @@ class HomePage extends StatelessWidget {
                                     AssetImage(menuItem.image ?? ''),
                               ),
                               trailing: FilledButton(
-                                  onPressed: () {}, child: const Text('Mulai')),
+                                  onPressed: () => context.push(
+                                        Uri(
+                                          path: '/paritta/list/${menuItem.id}',
+                                          queryParameters: {
+                                            'title': menuItem.title
+                                          },
+                                        ).toString(),
+                                      ),
+                                  child: Text(i10n.read)),
                             )
                           ],
                         ),
@@ -229,7 +237,7 @@ class HomePage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'Favorit',
+                        i10n.homeFavorite,
                         style: textTheme.titleMedium,
                       )
                     ],
@@ -242,8 +250,7 @@ class HomePage extends StatelessWidget {
                       }
 
                       if (state.favoriteMenus.isEmpty) {
-                        return const Center(
-                            child: Text('Belum ada paritta favorit'));
+                        return Center(child: Text(i10n.homeNoFavoriteParitta));
                       }
 
                       return Column(
@@ -269,7 +276,7 @@ class HomePage extends StatelessWidget {
                                                     },
                                                   ).toString(),
                                                 ),
-                                            child: const Text('Mulai')),
+                                            child: Text(i10n.read)),
                                       )
                                     ],
                                   ),

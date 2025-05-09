@@ -27,10 +27,61 @@ class AppLocalizationsId extends AppLocalizations {
   String get homeFavorite => 'Favorit';
 
   @override
+  String get homeNoLastReadParitta => 'Mulai baca Paritta untuk melihat disini';
+
+  @override
+  String get homeNoFavoriteParitta => 'Paritta favorit Anda akan muncul di sini';
+
+  @override
   String homeDate(DateTime date) {
     final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMEEEEd(localeName);
     final String dateString = dateDateFormat.format(date);
 
     return '$dateString';
   }
+
+  @override
+  String get parittaSearchParitta => 'Cari Paritta';
+
+  @override
+  String get setting => 'Pengaturan';
+
+  @override
+  String get settingCommon => 'Umum';
+
+  @override
+  String get settingLanguage => 'Bahasa';
+
+  @override
+  String get settingChooseLanguage => 'Pilih Bahasa';
+
+  @override
+  String get settingDisplay => 'Tampilan';
+
+  @override
+  String get settingTheme => 'Tema';
+
+  @override
+  String get settingChooseTheme => 'Pilih Tema';
+
+  @override
+  String get settingLight => 'Terang';
+
+  @override
+  String get settingDark => 'Gelap';
+
+  @override
+  String get settingSystem => 'Sistem';
+
+  @override
+  String get settingMiscellaneous => 'Lain-lain';
+
+  @override
+  String get settingAbout => 'Tentang';
+
+  @override
+  String get read => 'Baca';
+
+  @override
+  String get fontSize => 'Ukuran Font';
 }

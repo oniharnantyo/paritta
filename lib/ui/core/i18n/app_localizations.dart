@@ -131,11 +131,113 @@ abstract class AppLocalizations {
   /// **'Favorite'**
   String get homeFavorite;
 
+  /// No description provided for @homeNoLastReadParitta.
+  ///
+  /// In en, this message translates to:
+  /// **'Start reading a Paritta to see it here'**
+  String get homeNoLastReadParitta;
+
+  /// No description provided for @homeNoFavoriteParitta.
+  ///
+  /// In en, this message translates to:
+  /// **'Your favorite Parittas will appear here'**
+  String get homeNoFavoriteParitta;
+
   /// No description provided for @homeDate.
   ///
   /// In en, this message translates to:
   /// **'{date}'**
   String homeDate(DateTime date);
+
+  /// No description provided for @parittaSearchParitta.
+  ///
+  /// In en, this message translates to:
+  /// **'Cari Paritta'**
+  String get parittaSearchParitta;
+
+  /// No description provided for @setting.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting'**
+  String get setting;
+
+  /// No description provided for @settingCommon.
+  ///
+  /// In en, this message translates to:
+  /// **'Common'**
+  String get settingCommon;
+
+  /// No description provided for @settingLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingLanguage;
+
+  /// No description provided for @settingChooseLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Language'**
+  String get settingChooseLanguage;
+
+  /// No description provided for @settingDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get settingDisplay;
+
+  /// No description provided for @settingTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingTheme;
+
+  /// No description provided for @settingChooseTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Theme'**
+  String get settingChooseTheme;
+
+  /// No description provided for @settingLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingLight;
+
+  /// No description provided for @settingDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingDark;
+
+  /// No description provided for @settingSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settingSystem;
+
+  /// No description provided for @settingMiscellaneous.
+  ///
+  /// In en, this message translates to:
+  /// **'Miscellaneous'**
+  String get settingMiscellaneous;
+
+  /// No description provided for @settingAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingAbout;
+
+  /// No description provided for @read.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get read;
+
+  /// No description provided for @fontSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get fontSize;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

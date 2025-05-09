@@ -1,0 +1,2 @@
+/Users/oniharnantyo/paritta_app/android/app/.cxx/RelWithDebInfo/624m2m3b/x86_64/CMakeFiles/edit_cache.dir
+/Users/oniharnantyo/paritta_app/android/app/.cxx/RelWithDebInfo/624m2m3b/x86_64/CMakeFiles/rebuild_cache.dir

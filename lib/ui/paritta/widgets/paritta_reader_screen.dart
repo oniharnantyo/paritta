@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:paritta_app/domain/model/paritta.dart';
 import 'package:paritta_app/domain/model/reader_config.dart';
+import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_reader_bloc.dart';
 
 class ParittaReaderScreen extends StatelessWidget {
@@ -17,6 +18,8 @@ class ParittaReaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final i10n = AppLocalizations.of(context);
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -38,7 +41,7 @@ class ParittaReaderScreen extends StatelessWidget {
                       showDragHandle: true,
                       builder: (modalContext) => BlocProvider.value(
                         value: bloc,
-                        child: _bottomSheet(bloc),
+                        child: _bottomSheet(bloc, i10n),
                       ),
                     );
                   },
@@ -74,7 +77,7 @@ class ParittaReaderScreen extends StatelessWidget {
     );
   }
 
-  Widget _bottomSheet(ParittaReaderBloc bloc) {
+  Widget _bottomSheet(ParittaReaderBloc bloc, AppLocalizations i10n) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
       child: SizedBox(
@@ -83,17 +86,20 @@ class ParittaReaderScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'Font Size',
-              style: TextStyle(fontSize: 16),
+            Text(
+              i10n.fontSize,
+              style: const TextStyle(fontSize: 16),
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text('T', style: TextStyle(fontSize: 16)),
-                Text('T', style: TextStyle(fontSize: 32)),
-              ],
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text('T', style: TextStyle(fontSize: 16)),
+                  Text('T', style: TextStyle(fontSize: 32)),
+                ],
+              ),
             ),
             BlocBuilder<ParittaReaderBloc, ParittaReaderState>(
               bloc: bloc,

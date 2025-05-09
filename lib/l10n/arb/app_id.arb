@@ -6,6 +6,8 @@
   "settingNavbarTitle": "Pengaturan",
   "homeLastRead": "Terakhir Dibaca",
   "homeFavorite": "Favorit",
+  "homeNoLastReadParitta": "Mulai baca Paritta untuk melihat disini",
+  "homeNoFavoriteParitta": "Paritta favorit Anda akan muncul di sini",
   "homeDate": "{date}",
   "@homeDate": {
     "placeholders": {
@@ -14,5 +16,20 @@
         "format": "yMMMMEEEEd"
       }
     }
-  }
+  },
+  "parittaSearchParitta": "Cari Paritta",
+  "setting": "Pengaturan",
+  "settingCommon": "Umum",
+  "settingLanguage": "Bahasa",
+  "settingChooseLanguage": "Pilih Bahasa",
+  "settingDisplay": "Tampilan",
+  "settingTheme": "Tema",
+  "settingChooseTheme": "Pilih Tema",
+  "settingLight": "Terang",
+  "settingDark": "Gelap",
+  "settingSystem": "Sistem",
+  "settingMiscellaneous": "Lain-lain",
+  "settingAbout": "Tentang",
+  "read": "Baca",
+  "fontSize": "Ukuran Font"
 }

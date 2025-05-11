@@ -12,7 +12,7 @@ class MenuService {
 
   static final _log = Logger('MenuService');
 
-  Future<List<MenuModel>> getMainMenu() async {
+  Future<List<MenuModel>> getMainMenu(String? search) async {
     try {
       final data =
           await rootBundle.loadString('assets/json/menu/main_menu.json');
@@ -26,26 +26,35 @@ class MenuService {
       final favoriteMenusJson =
           await sharedPreferences.getString('favoriteMenus');
 
-      _log.info(favoriteMenusJson);
+      var result = <MenuModel>[];
 
       if (favoriteMenusJson != null) {
         final favoriteMenus = jsonDecode(favoriteMenusJson);
 
         for (var i = 0; i < menus.length; i++) {
-          menus[i] = menus[i].copyWith(
-            menus: menus[i]
-                .menus
-                .map(
-                  (_menu) => _menu.copyWith(
+          var menuItems = <MenuItemModel>[];
+          for (var j = 0; j < menus[i].menus.length; j++) {
+            final _menuItem = menus[i].menus[j];
+
+            if (search != null &&
+                !_menuItem.title.toLowerCase().contains(search.toLowerCase())) {
+              continue;
+            }
+
+            menuItems.add(
+              menus[i].menus[j].copyWith(
                     isFavorite: (favoriteMenus as Map<String, dynamic>)
-                        .containsKey(_menu.id),
+                        .containsKey(_menuItem.id),
                   ),
-                )
-                .toList(),
-          );
+            );
+          }
+
+          if (menuItems.isNotEmpty) {
+            result.add(menus[i].copyWith(menus: menuItems));
+          }
         }
       }
-      return menus;
+      return result;
     } on Exception catch (error) {
       _log.severe(error);
       rethrow;

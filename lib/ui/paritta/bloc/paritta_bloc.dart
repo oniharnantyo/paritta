@@ -33,7 +33,7 @@ class ParittaBloc extends Bloc<ParittaEvent, ParittaState> {
   ) async {
     emit(state.copyWith(status: ParittaStatus.loading));
     try {
-      final menus = await _menuRepository.getMainMenus();
+      final menus = await _menuRepository.getMainMenus(search: event.search);
       emit(state.copyWith(status: ParittaStatus.success, menus: menus));
     } catch (error) {
       emit(

@@ -4,11 +4,16 @@ sealed class ParittaEvent extends Equatable {
   const ParittaEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class MainMenuRequested extends ParittaEvent {
-  const MainMenuRequested();
+  const MainMenuRequested({this.search});
+
+  final String? search;
+
+  @override
+  List<Object?> get props => [search];
 }
 
 final class FavoriteMenuAdded extends ParittaEvent {

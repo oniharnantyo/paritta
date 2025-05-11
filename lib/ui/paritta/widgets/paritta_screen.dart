@@ -13,56 +13,65 @@ class ParittaScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final i10n = AppLocalizations.of(context);
 
-    return BlocListener<ParittaBloc, ParittaState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
-        if (state.status == ParittaStatus.error) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text(state.error ?? 'Error loading menus')),
-            );
-        }
-      },
-      child: BlocBuilder<ParittaBloc, ParittaState>(
-        builder: (context, state) {
-          if (state.status == ParittaStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state.status != ParittaStatus.success) {
-            return const SizedBox();
-          }
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 150,
+          flexibleSpace: LayoutBuilder(
+            builder: (context, constraints) {
+              final isCollapsed = constraints.maxHeight <= kToolbarHeight + 40;
 
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                expandedHeight: 150,
-                flexibleSpace: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isCollapsed =
-                        constraints.maxHeight <= kToolbarHeight + 40;
-
-                    return FlexibleSpaceBar(
-                      title: isCollapsed ? const Text('Paritta') : null,
-                      centerTitle: true,
-                      background: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text('Paritta', style: textTheme.headlineMedium),
-                          Padding(
-                            padding: EdgeInsets.all(16),
-                            child: SearchBar(
-                              leading: const Icon(Icons.search),
-                              hintText: i10n.parittaSearchParitta,
-                            ),
-                          ),
-                        ],
+              return FlexibleSpaceBar(
+                title: isCollapsed ? const Text('Paritta') : null,
+                centerTitle: true,
+                background: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Paritta', style: textTheme.headlineMedium),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: SearchBar(
+                        leading: const Icon(Icons.search),
+                        hintText: i10n.parittaSearchParitta,
+                        onChanged: (String value) {
+                          context
+                              .read<ParittaBloc>()
+                              .add(MainMenuRequested(search: value));
+                        },
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ),
-              ...state.menus.map(
+              );
+            },
+          ),
+        ),
+        BlocListener<ParittaBloc, ParittaState>(
+          listenWhen: (previous, current) => previous.status != current.status,
+          listener: (context, state) {
+            if (state.status == ParittaStatus.error) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(content: Text(state.error ?? 'Error loading menus')),
+                );
+            }
+          },
+          child:
+              BlocBuilder<ParittaBloc, ParittaState>(builder: (context, state) {
+            if (state.status == ParittaStatus.loading) {
+              return const SliverToBoxAdapter(
+                child: Center(child: CircularProgressIndicator()),
+              );
+            } else if (state.status != ParittaStatus.success) {
+              return const SliverToBoxAdapter(
+                child: SizedBox(),
+              );
+            }
+
+            return MultiSliver(
+              children: state.menus.map(
                 (menu) {
                   return SliverPadding(
                     padding:
@@ -78,112 +87,129 @@ class ParittaScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SliverGrid(
-                          delegate: SliverChildBuilderDelegate(
-                              childCount: menu.menus.length, (context, index) {
-                            final _menu = menu.menus[index];
-                            return Card.outlined(
-                              clipBehavior: Clip.hardEdge,
-                              child: InkWell(
-                                onTap: () {
-                                  context
-                                      .read<ParittaBloc>()
-                                      .add(LastReadMenuSaved(_menu));
-                                  context.push(
-                                    Uri(
-                                      path: '/paritta/list/${_menu.id}',
-                                      queryParameters: {'title': _menu.title},
-                                    ).toString(),
-                                  );
-                                },
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Stack(
+                        SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 200,
+                            child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1, // 1 row
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 10 / 8,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: menu.menus.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final _menu = menu.menus[index];
+                                return Card.outlined(
+                                  clipBehavior: Clip.hardEdge,
+                                  child: InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<ParittaBloc>()
+                                          .add(LastReadMenuSaved(_menu));
+                                      context.push(
+                                        Uri(
+                                          path: '/paritta/list/${_menu.id}',
+                                          queryParameters: {
+                                            'title': _menu.title
+                                          },
+                                        ).toString(),
+                                      );
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(16),
-                                            bottomRight: Radius.circular(16),
-                                          ),
-                                          child: AspectRatio(
-                                            aspectRatio: 4 / 3, // square image
-                                            child: Image.asset(
-                                              'assets/images/tuntunan_puja_bhakti.png',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        Stack(
                                           children: [
-                                            IconButton.filledTonal(
-                                              onPressed: () {
-                                                if (_menu.isFavorite ?? false) {
-                                                  context
-                                                      .read<ParittaBloc>()
-                                                      .add(FavoriteMenuDeleted(
-                                                          _menu.id));
-                                                } else {
-                                                  context
-                                                      .read<ParittaBloc>()
-                                                      .add(FavoriteMenuAdded(
-                                                          _menu));
-                                                }
-                                              },
-                                              padding:
-                                                  const EdgeInsets.symmetric(
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                bottomLeft: Radius.circular(16),
+                                                bottomRight:
+                                                    Radius.circular(16),
+                                              ),
+                                              child: AspectRatio(
+                                                aspectRatio: 4 / 3,
+                                                // square image
+                                                child: Image.asset(
+                                                  'assets/images/tuntunan_puja_bhakti.png',
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                IconButton.filledTonal(
+                                                  onPressed: () {
+                                                    if (_menu.isFavorite ??
+                                                        false) {
+                                                      context
+                                                          .read<ParittaBloc>()
+                                                          .add(
+                                                              FavoriteMenuDeleted(
+                                                                  _menu.id));
+                                                    } else {
+                                                      context
+                                                          .read<ParittaBloc>()
+                                                          .add(
+                                                              FavoriteMenuAdded(
+                                                                  _menu));
+                                                    }
+                                                  },
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
                                                       horizontal: 3,
                                                       vertical: 3),
-                                              constraints: const BoxConstraints(
-                                                  maxHeight: 24, maxWidth: 24),
-                                              icon: const Icon(
-                                                Icons.favorite_border,
-                                                size: 18,
-                                              ),
-                                              isSelected: _menu.isFavorite,
-                                              selectedIcon: const Icon(
-                                                Icons.favorite,
-                                                color: Colors.redAccent,
-                                                size: 18,
-                                              ),
-                                            )
+                                                  constraints:
+                                                      const BoxConstraints(
+                                                          maxHeight: 24,
+                                                          maxWidth: 24),
+                                                  icon: const Icon(
+                                                    Icons.favorite_border,
+                                                    size: 18,
+                                                  ),
+                                                  isSelected: _menu.isFavorite,
+                                                  selectedIcon: const Icon(
+                                                    Icons.favorite,
+                                                    color: Colors.redAccent,
+                                                    size: 18,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ],
+                                        ),
+                                        ListTile(
+                                          title: Text(
+                                            _menu.title ?? '',
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    ListTile(
-                                      title: Text(
-                                        _menu.title ?? '',
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 5 / 6,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
                   );
                 },
-              ),
-            ],
-          );
-        },
-      ),
+              ).toList(),
+            );
+          }),
+        ),
+      ],
     );
   }
 }

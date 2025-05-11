@@ -13,9 +13,9 @@ class LocalMenuRepository extends MenuRepository {
   static final _log = Logger('LocalMenuRepository');
 
   @override
-  Future<List<Menu>> getMainMenus() async {
+  Future<List<Menu>> getMainMenus({String? search}) async {
     try {
-      final menus = await _menuService.getMainMenu();
+      final menus = await _menuService.getMainMenu(search);
 
       return menus
           .map(

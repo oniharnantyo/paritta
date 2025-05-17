@@ -215,6 +215,18 @@ abstract class AppLocalizations {
   /// **'System'**
   String get settingSystem;
 
+  /// No description provided for @settingNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get settingNotification;
+
+  /// No description provided for @settingNotificationUposathaReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Uposatha Reminder'**
+  String get settingNotificationUposathaReminder;
+
   /// No description provided for @settingMiscellaneous.
   ///
   /// In en, this message translates to:
@@ -226,6 +238,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get settingAbout;
+
+  /// No description provided for @notificationUposatha.
+  ///
+  /// In en, this message translates to:
+  /// **'Uposatha Reminder'**
+  String get notificationUposatha;
+
+  /// No description provided for @notificationUposathaDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s do Uposatha Sila on Uposatha Day!'**
+  String get notificationUposathaDescription;
 
   /// No description provided for @read.
   ///

@@ -32,16 +32,22 @@ class _AppState extends State<App> {
 
     return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
-        if (state.status == AppStatus.error) {
-          return Scaffold(
-            body: Center(
-              child: Text(state.error ?? 'Error loading app'),
+        if (state.status == AppStatus.initial) {
+          return const MaterialApp(
+            home: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
             ),
           );
         }
 
-        if (state.appConfig == null) {
-          return const SizedBox.shrink();
+        if (state.status == AppStatus.error) {
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text(state.error ?? 'Error loading app'),
+              ),
+            ),
+          );
         }
 
         var _language = '';

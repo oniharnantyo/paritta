@@ -25,11 +25,14 @@ class AppConfigService {
     try {
       final appConfigJson = await sharedPreferences.getString('appConfig');
       if (appConfigJson == null) {
-        return const AppConfigModel(theme: 'system', language: 'id');
+        return const AppConfigModel(
+            theme: 'system',
+            language: 'id',
+            notificationUposathaReminder: false);
       }
 
       final appConfig = AppConfigModel.fromJson(
-          jsonDecode(appConfigJson!) as Map<String, dynamic>);
+          jsonDecode(appConfigJson) as Map<String, dynamic>);
 
       return appConfig;
     } on Exception catch (error) {

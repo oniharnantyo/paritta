@@ -74,10 +74,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingSystem => 'System';
 
   @override
+  String get settingNotification => 'Notification';
+
+  @override
+  String get settingNotificationUposathaReminder => 'Uposatha Reminder';
+
+  @override
   String get settingMiscellaneous => 'Miscellaneous';
 
   @override
   String get settingAbout => 'About';
+
+  @override
+  String get notificationUposatha => 'Uposatha Reminder';
+
+  @override
+  String get notificationUposathaDescription => 'Let\'s do Uposatha Sila on Uposatha Day!';
 
   @override
   String get read => 'Read';

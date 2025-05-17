@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0
+  flutter_local_notifications: ^19.2.0
   flutter_localizations:
     sdk: flutter
   flutter_settings_ui: ^3.0.1
@@ -27,9 +28,17 @@ dependencies:
   settings_ui: ^2.0.2
   shared_preferences: ^2.5.3
   sliver_tools: ^0.2.12
+  timezone: ^0.10.1
+  workmanager:
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager.git
+      path: workmanager
+      ref: main
+  flutter_autostart: ^0.0.2
+  device_info_plus: ^11.4.0
 
 dev_dependencies:
-  bloc_lint: ^0.2.0-dev.1
+  bloc_lint: ^0.2.0-dev
   build_runner: ^2.4.15
   flutter_test:
     sdk: flutter

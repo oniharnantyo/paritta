@@ -28,8 +28,12 @@
   "settingLight": "Light",
   "settingDark": "Dark",
   "settingSystem": "System",
+  "settingNotification": "Notification",
+  "settingNotificationUposathaReminder": "Uposatha Reminder",
   "settingMiscellaneous": "Miscellaneous",
   "settingAbout": "About",
+  "notificationUposatha": "Uposatha Reminder",
+  "notificationUposathaDescription": "Let's do Uposatha Sila on Uposatha Day!",
   "read": "Read",
   "fontSize": "Font Size"
 }

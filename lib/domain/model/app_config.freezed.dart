@@ -17,6 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$AppConfig {
   ThemeMode get theme;
   Language get language;
+  bool get notificationUposathaReminder;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -32,15 +33,20 @@ mixin _$AppConfig {
             other is AppConfig &&
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.language, language) ||
-                other.language == language));
+                other.language == language) &&
+            (identical(other.notificationUposathaReminder,
+                    notificationUposathaReminder) ||
+                other.notificationUposathaReminder ==
+                    notificationUposathaReminder));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, theme, language);
+  int get hashCode =>
+      Object.hash(runtimeType, theme, language, notificationUposathaReminder);
 
   @override
   String toString() {
-    return 'AppConfig(theme: $theme, language: $language)';
+    return 'AppConfig(theme: $theme, language: $language, notificationUposathaReminder: $notificationUposathaReminder)';
   }
 }
 
@@ -49,7 +55,8 @@ abstract mixin class $AppConfigCopyWith<$Res> {
   factory $AppConfigCopyWith(AppConfig value, $Res Function(AppConfig) _then) =
       _$AppConfigCopyWithImpl;
   @useResult
-  $Res call({ThemeMode theme, Language language});
+  $Res call(
+      {ThemeMode theme, Language language, bool notificationUposathaReminder});
 }
 
 /// @nodoc
@@ -66,6 +73,7 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
   $Res call({
     Object? theme = null,
     Object? language = null,
+    Object? notificationUposathaReminder = null,
   }) {
     return _then(_self.copyWith(
       theme: null == theme
@@ -76,6 +84,10 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
           ? _self.language
           : language // ignore: cast_nullable_to_non_nullable
               as Language,
+      notificationUposathaReminder: null == notificationUposathaReminder
+          ? _self.notificationUposathaReminder
+          : notificationUposathaReminder // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -83,12 +95,17 @@ class _$AppConfigCopyWithImpl<$Res> implements $AppConfigCopyWith<$Res> {
 /// @nodoc
 
 class _AppConfig implements AppConfig {
-  const _AppConfig({required this.theme, required this.language});
+  const _AppConfig(
+      {required this.theme,
+      required this.language,
+      required this.notificationUposathaReminder});
 
   @override
   final ThemeMode theme;
   @override
   final Language language;
+  @override
+  final bool notificationUposathaReminder;
 
   /// Create a copy of AppConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -105,15 +122,20 @@ class _AppConfig implements AppConfig {
             other is _AppConfig &&
             (identical(other.theme, theme) || other.theme == theme) &&
             (identical(other.language, language) ||
-                other.language == language));
+                other.language == language) &&
+            (identical(other.notificationUposathaReminder,
+                    notificationUposathaReminder) ||
+                other.notificationUposathaReminder ==
+                    notificationUposathaReminder));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, theme, language);
+  int get hashCode =>
+      Object.hash(runtimeType, theme, language, notificationUposathaReminder);
 
   @override
   String toString() {
-    return 'AppConfig(theme: $theme, language: $language)';
+    return 'AppConfig(theme: $theme, language: $language, notificationUposathaReminder: $notificationUposathaReminder)';
   }
 }
 
@@ -125,7 +147,8 @@ abstract mixin class _$AppConfigCopyWith<$Res>
       __$AppConfigCopyWithImpl;
   @override
   @useResult
-  $Res call({ThemeMode theme, Language language});
+  $Res call(
+      {ThemeMode theme, Language language, bool notificationUposathaReminder});
 }
 
 /// @nodoc
@@ -142,6 +165,7 @@ class __$AppConfigCopyWithImpl<$Res> implements _$AppConfigCopyWith<$Res> {
   $Res call({
     Object? theme = null,
     Object? language = null,
+    Object? notificationUposathaReminder = null,
   }) {
     return _then(_AppConfig(
       theme: null == theme
@@ -152,6 +176,10 @@ class __$AppConfigCopyWithImpl<$Res> implements _$AppConfigCopyWith<$Res> {
           ? _self.language
           : language // ignore: cast_nullable_to_non_nullable
               as Language,
+      notificationUposathaReminder: null == notificationUposathaReminder
+          ? _self.notificationUposathaReminder
+          : notificationUposathaReminder // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

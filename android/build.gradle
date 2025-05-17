@@ -3,6 +3,14 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    afterEvaluate { project ->
+        if (project.name == 'workmanager') {
+            project.android {
+                namespace = "dev.fluttercommunity.workmanager"
+            }
+        }
+    }
 }
 
 rootProject.buildDir = '../build'

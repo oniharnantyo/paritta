@@ -121,10 +121,25 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ),
                 SettingsSection(
+                  title: Text(i10n.settingNotification),
+                  tiles: <SettingsTile>[
+                    SettingsTile.switchTile(
+                      leading: const Icon(Icons.notifications),
+                      initialValue:
+                          state.appConfig?.notificationUposathaReminder ??
+                              false,
+                      onToggle: (value) => context
+                          .read<SettingBloc>()
+                          .add(NotificationUposathaReminderChanged(value)),
+                      title: Text(i10n.settingNotificationUposathaReminder),
+                    )
+                  ],
+                ),
+                SettingsSection(
                   title: Text(i10n.settingMiscellaneous),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
-                      leading: Icon(Icons.info),
+                      leading: const Icon(Icons.info),
                       title: Text(i10n.settingAbout),
                       onPressed: (context) => showAboutDialog(
                         context: context,

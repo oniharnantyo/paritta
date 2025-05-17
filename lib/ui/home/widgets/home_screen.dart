@@ -81,6 +81,22 @@ class HomePage extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final i10n = AppLocalizations.of(context);
 
+    final lunarDay = Lunar.fromDate(DateTime.now()).getDay();
+
+    var lunarIcon = Icons.nightlight;
+    var lunarIconColor = colorScheme.onSurface;
+
+    if (lunarDay == 15) {
+      lunarIcon = Icons.circle;
+      lunarIconColor = Colors.orange;
+    } else if (lunarDay == 1) {
+      lunarIcon = Icons.circle_outlined;
+      lunarIconColor = colorScheme.onSurface;
+    } else if (lunarDay > 15 && lunarDay <= 22) {
+      lunarIcon = Icons.mode_night;
+      lunarIconColor = Colors.orange;
+    }
+
     return BlocListener<HomeBloc, HomeState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
@@ -108,6 +124,7 @@ class HomePage extends StatelessWidget {
                       Text(i10n.homeDate(DateTime.now()),
                           style: textTheme.titleMedium),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             '${DateTime.now().year + 544} BE',
@@ -122,16 +139,16 @@ class HomePage extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Lunar ${Lunar.fromDate(DateTime.now()).getDay()}',
+                            'Lunar $lunarDay',
                             style: textTheme.titleSmall?.copyWith(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Icon(
-                            Icons.nightlight,
-                            color: Colors.orange,
-                            size: 16,
+                          Icon(
+                            lunarIcon,
+                            color: lunarIconColor,
+                            size: 14,
                           ),
                         ],
                       ),

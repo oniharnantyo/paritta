@@ -23,5 +23,5 @@ final class SettingState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, error];
+  List<Object?> get props => [status, error, appConfig];
 }

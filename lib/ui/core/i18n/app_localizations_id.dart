@@ -74,10 +74,22 @@ class AppLocalizationsId extends AppLocalizations {
   String get settingSystem => 'Sistem';
 
   @override
+  String get settingNotification => 'Notifikasi';
+
+  @override
+  String get settingNotificationUposathaReminder => 'Pengingat Uposatha';
+
+  @override
   String get settingMiscellaneous => 'Lain-lain';
 
   @override
   String get settingAbout => 'Tentang';
+
+  @override
+  String get notificationUposatha => 'Pengingat Uposatha';
+
+  @override
+  String get notificationUposathaDescription => 'Mari melaksanakan Uposatha Sila di hari Uposatha!';
 
   @override
   String get read => 'Baca';

@@ -10,5 +10,6 @@ abstract class AppConfig with _$AppConfig {
   const factory AppConfig({
     required ThemeMode theme,
     required Language language,
+    required bool notificationUposathaReminder,
   }) = _AppConfig;
 }

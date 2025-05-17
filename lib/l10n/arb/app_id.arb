@@ -28,8 +28,12 @@
   "settingLight": "Terang",
   "settingDark": "Gelap",
   "settingSystem": "Sistem",
+  "settingNotification": "Notifikasi",
+  "settingNotificationUposathaReminder": "Pengingat Uposatha",
   "settingMiscellaneous": "Lain-lain",
   "settingAbout": "Tentang",
+  "notificationUposatha": "Pengingat Uposatha",
+  "notificationUposathaDescription": "Mari melaksanakan Uposatha Sila di hari Uposatha!",
   "read": "Baca",
   "fontSize": "Ukuran Font"
 }

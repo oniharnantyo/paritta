@@ -20,6 +20,7 @@ class LocalAppConfigRepository extends AppConfigRepository {
       return AppConfig(
         theme: themeFromString(appConfig.theme),
         language: languageFromString(appConfig.language),
+        notificationUposathaReminder: appConfig.notificationUposathaReminder,
       );
     } catch (error) {
       _log.severe(error);
@@ -33,6 +34,7 @@ class LocalAppConfigRepository extends AppConfigRepository {
       final appConfigModel = AppConfigModel(
         theme: appConfig.theme.name,
         language: appConfig.language.name,
+        notificationUposathaReminder: appConfig.notificationUposathaReminder,
       );
 
       await _appConfigService.save(appConfigModel);

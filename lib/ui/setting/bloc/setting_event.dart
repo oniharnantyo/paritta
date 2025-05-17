@@ -28,3 +28,12 @@ final class LanguageSaved extends SettingEvent {
   @override
   List<Object> get props => [language];
 }
+
+final class NotificationUposathaReminderChanged extends SettingEvent {
+  const NotificationUposathaReminderChanged(this.notificationUposathaReminder);
+
+  final bool notificationUposathaReminder;
+
+  @override
+  List<Object> get props => [notificationUposathaReminder];
+}

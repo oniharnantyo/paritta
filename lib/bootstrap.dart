@@ -7,14 +7,17 @@ import 'package:paritta_app/app/cubit/app_cubit.dart';
 import 'package:paritta_app/data/repository/local_app_config_repository.dart';
 import 'package:paritta_app/data/repository/local_menu_repository.dart';
 import 'package:paritta_app/data/repository/local_paritta_repository.dart';
+import 'package:paritta_app/data/repository/local_quote_repository.dart';
 import 'package:paritta_app/data/repository/local_reader_config_repository.dart';
 import 'package:paritta_app/data/service/app_config_service.dart';
 import 'package:paritta_app/data/service/menu_service.dart';
 import 'package:paritta_app/data/service/paritta_service.dart';
+import 'package:paritta_app/data/service/quote_service.dart';
 import 'package:paritta_app/data/service/reader_config_service.dart';
 import 'package:paritta_app/domain/repository/app_config_repository.dart';
 import 'package:paritta_app/domain/repository/menu_repository.dart';
 import 'package:paritta_app/domain/repository/paritta_repository.dart';
+import 'package:paritta_app/domain/repository/quote_repository.dart';
 import 'package:paritta_app/domain/repository/reader_config_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,6 +57,13 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
             ),
           ),
         ),
+        RepositoryProvider<QuoteRepository>(
+          create: (context) => LocalQuoteRepository(
+            quoteService: QuoteService(
+              sharedPreferences: SharedPreferencesAsync(),
+            ),
+          ),
+        )
       ],
       child: BlocProvider(
         create: (context) =>

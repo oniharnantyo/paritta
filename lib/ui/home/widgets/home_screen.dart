@@ -39,7 +39,8 @@ class HomeScreen extends StatelessWidget {
             case 0:
               context.read<HomeBloc>()
                 ..add(const FavoriteMenusRequested())
-                ..add(const LastReadMenuRequested());
+                ..add(const LastReadMenuRequested())
+                ..add(const TodayQuoteRequested());
             case 1:
               context.read<ParittaBloc>().add(const MainMenuRequested());
             case 2:
@@ -124,7 +125,6 @@ class HomePage extends StatelessWidget {
                       Text(i10n.homeDate(DateTime.now()),
                           style: textTheme.titleMedium),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             '${DateTime.now().year + 544} BE',
@@ -172,28 +172,34 @@ class HomePage extends StatelessWidget {
                           flex: 6,
                           child: Padding(
                             padding: const EdgeInsets.all(24),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '"Karaniyametta Sutta"',
-                                  style: textTheme.bodySmall?.copyWith(
-                                    color: colorScheme.onPrimaryContainer,
-                                    fontWeight: FontWeight.w100,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Tak bergaul dengan orang yang tak bijaksana\n'
-                                  'Bergaul dengan mereka yang bijaksana\n'
-                                  'Menghormat mereka yang patut dihormat\n'
-                                  'Itulah Berkah Utama',
-                                  style: textTheme.titleLarge?.copyWith(
-                                    color: colorScheme.onPrimaryContainer,
-                                  ),
-                                ),
-                              ],
+                            child: BlocBuilder<HomeBloc, HomeState>(
+                              builder: (context, state) {
+                                if (state.status == HomeStatus.loading) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '"${state.todayQuote?.source}"',
+                                      style: textTheme.bodySmall?.copyWith(
+                                        color: colorScheme.onPrimaryContainer,
+                                        fontWeight: FontWeight.w100,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      '${state.todayQuote?.quote}',
+                                      style: textTheme.titleLarge?.copyWith(
+                                        color: colorScheme.onPrimaryContainer,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ),
                         ),

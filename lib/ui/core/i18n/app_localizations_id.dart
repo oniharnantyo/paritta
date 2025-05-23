@@ -30,11 +30,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get homeNoLastReadParitta => 'Mulai baca Paritta untuk melihat disini';
 
   @override
-  String get homeNoFavoriteParitta => 'Paritta favorit Anda akan muncul di sini';
+  String get homeNoFavoriteParitta =>
+      'Paritta favorit Anda akan muncul di sini';
 
   @override
   String homeDate(DateTime date) {
-    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMEEEEd(localeName);
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
     final String dateString = dateDateFormat.format(date);
 
     return '$dateString';
@@ -89,7 +91,8 @@ class AppLocalizationsId extends AppLocalizations {
   String get notificationUposatha => 'Pengingat Uposatha';
 
   @override
-  String get notificationUposathaDescription => 'Mari melaksanakan Uposatha Sila di hari Uposatha!';
+  String get notificationUposathaDescription =>
+      'Mari melaksanakan Uposatha Sila di hari Uposatha!';
 
   @override
   String get read => 'Baca';

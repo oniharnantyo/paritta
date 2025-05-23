@@ -14,3 +14,7 @@ final class FavoriteMenusRequested extends HomeEvent {
 final class LastReadMenuRequested extends HomeEvent {
   const LastReadMenuRequested();
 }
+
+final class TodayQuoteRequested extends HomeEvent {
+  const TodayQuoteRequested();
+}

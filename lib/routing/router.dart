@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:paritta_app/domain/repository/app_config_repository.dart';
 import 'package:paritta_app/domain/repository/menu_repository.dart';
 import 'package:paritta_app/domain/repository/paritta_repository.dart';
+import 'package:paritta_app/domain/repository/quote_repository.dart';
 import 'package:paritta_app/domain/repository/reader_config_repository.dart';
 import 'package:paritta_app/routing/routes.dart';
 import 'package:paritta_app/ui/home/bloc/home_bloc.dart';
@@ -32,8 +33,13 @@ GoRouter router() {
                 ),
               ),
               BlocProvider<HomeBloc>(
-                  create: (context) => HomeBloc(menuRepository: context.read())
-                    ..add(const FavoriteMenusRequested())),
+                create: (context) => HomeBloc(
+                  menuRepository: context.read<MenuRepository>(),
+                  quoteRepository: context.read<QuoteRepository>(),
+                )
+                  ..add(const FavoriteMenusRequested())
+                  ..add(const TodayQuoteRequested()),
+              ),
               BlocProvider(create: (context) => HomeTabCubit()),
               BlocProvider(
                 create: (context) => SettingBloc(

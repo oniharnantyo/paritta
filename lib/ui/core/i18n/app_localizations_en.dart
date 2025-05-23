@@ -34,7 +34,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String homeDate(DateTime date) {
-    final intl.DateFormat dateDateFormat = intl.DateFormat.yMMMMEEEEd(localeName);
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
     final String dateString = dateDateFormat.format(date);
 
     return '$dateString';
@@ -89,7 +90,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationUposatha => 'Uposatha Reminder';
 
   @override
-  String get notificationUposathaDescription => 'Let\'s do Uposatha Sila on Uposatha Day!';
+  String get notificationUposathaDescription =>
+      'Let\'s do Uposatha Sila on Uposatha Day!';
 
   @override
   String get read => 'Read';

@@ -83,19 +83,42 @@ class HomePage extends StatelessWidget {
     final i10n = AppLocalizations.of(context);
 
     final lunarDay = Lunar.fromDate(DateTime.now()).getDay();
+    final lunarMonthInfo = LunarMonth.fromYm(
+        Lunar.fromDate(DateTime.now()).getYear(), 
+        Lunar.fromDate(DateTime.now()).getMonth());
+    final daysCount = lunarMonthInfo?.getDayCount() ?? 30;
 
-    var lunarIcon = Icons.nightlight;
+    var lunarIcon = Icons.nightlight_outlined;
     var lunarIconColor = colorScheme.onSurface;
 
-    if (lunarDay == 15) {
-      lunarIcon = Icons.circle;
-      lunarIconColor = Colors.orange;
-    } else if (lunarDay == 1) {
+    if (lunarDay == 1) {
+      // New Moon
       lunarIcon = Icons.circle_outlined;
       lunarIconColor = colorScheme.onSurface;
-    } else if (lunarDay > 15 && lunarDay <= 22) {
+    } else if (lunarDay == 15) {
+      // Full Moon
+      lunarIcon = Icons.circle;
+      lunarIconColor = Colors.orange;
+    } else if (lunarDay > 1 && lunarDay < 8) {
+      // Waxing Crescent
+      lunarIcon = Icons.nightlight;
+      lunarIconColor = Colors.orange;
+    } else if (lunarDay >= 8 && lunarDay <= 14) {
+      // Waxing Gibbous
+      lunarIcon = Icons.brightness_3;
+      lunarIconColor = Colors.orange;
+    } else if (lunarDay > 15 && lunarDay < 22) {
+      // Waning Gibbous
       lunarIcon = Icons.mode_night;
       lunarIconColor = Colors.orange;
+    } else if (lunarDay >= 22 && lunarDay < daysCount) {
+      // Waning Crescent
+      lunarIcon = Icons.dark_mode;
+      lunarIconColor = colorScheme.onSurface;
+    } else if (lunarDay == daysCount) {
+      // Last day of lunar month (could be a new moon)
+      lunarIcon = Icons.circle_outlined;
+      lunarIconColor = colorScheme.onSurface;
     }
 
     return BlocListener<HomeBloc, HomeState>(
@@ -121,26 +144,31 @@ class HomePage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(i10n.homeDate(DateTime.now()),
-                          style: textTheme.titleMedium),
+                      Text(
+                        i10n.homeDate(DateTime.now()),
+                        style: textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
                       Row(
                         children: [
                           Text(
                             '${DateTime.now().year + 544} BE',
-                            style: textTheme.titleSmall?.copyWith(
+                            style: textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            '-',
-                            style: textTheme.titleSmall,
+                          Container(
+                            width: 1,
+                            height: 16,
+                            color: colorScheme.onSurface,
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Lunar $lunarDay',
-                            style: textTheme.titleSmall?.copyWith(
+                            'Lunar Day $lunarDay',
+                            style: textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -184,17 +212,20 @@ class HomePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '"${state.todayQuote?.source}"',
-                                      style: textTheme.bodySmall?.copyWith(
-                                        color: colorScheme.onPrimaryContainer,
-                                        fontWeight: FontWeight.w100,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
                                       '${state.todayQuote?.quote}',
                                       style: textTheme.titleLarge?.copyWith(
                                         color: colorScheme.onPrimaryContainer,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        '"${state.todayQuote?.source}"',
+                                        style: textTheme.bodySmall?.copyWith(
+                                          color: colorScheme.onPrimaryContainer,
+                                          fontStyle: FontStyle.italic,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -231,27 +262,24 @@ class HomePage extends StatelessWidget {
                       final menuItem = state.lastReadMenu!;
 
                       return Card.outlined(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(menuItem.title),
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                backgroundImage:
-                                    AssetImage(menuItem.image ?? ''),
-                              ),
-                              trailing: FilledButton(
-                                  onPressed: () => context.push(
-                                        Uri(
-                                          path: '/paritta/list/${menuItem.id}',
-                                          queryParameters: {
-                                            'title': menuItem.title
-                                          },
-                                        ).toString(),
-                                      ),
-                                  child: Text(i10n.read)),
-                            )
-                          ],
+                        child: InkWell(
+                          onTap: () => context.push(
+                            Uri(
+                              path: '/paritta/list/${menuItem.id}',
+                              queryParameters: {
+                                'title': menuItem.title
+                              },
+                            ).toString(),
+                          ),
+                          child: ListTile(
+                            title: Text(menuItem.title),
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  AssetImage(menuItem.image ?? ''),
+                            ),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                          ),
                         ),
                       );
                     },
@@ -279,29 +307,25 @@ class HomePage extends StatelessWidget {
                       return Column(
                         children: state.favoriteMenus
                             .map((menuItem) => Card.outlined(
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        title: Text(menuItem.title),
-                                        leading: CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          backgroundImage: AssetImage(menuItem
-                                                  .image ??
-                                              'assets/images/tuntunan_puja_bhakti.png'),
-                                        ),
-                                        trailing: FilledButton(
-                                            onPressed: () => context.push(
-                                                  Uri(
-                                                    path:
-                                                        '/paritta/list/${menuItem.id}',
-                                                    queryParameters: {
-                                                      'title': menuItem.title
-                                                    },
-                                                  ).toString(),
-                                                ),
-                                            child: Text(i10n.read)),
-                                      )
-                                    ],
+                                  child: InkWell(
+                                    onTap: () => context.push(
+                                      Uri(
+                                        path: '/paritta/list/${menuItem.id}',
+                                        queryParameters: {
+                                          'title': menuItem.title
+                                        },
+                                      ).toString(),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(menuItem.title),
+                                      leading: CircleAvatar(
+                                        backgroundColor: Colors.transparent,
+                                        backgroundImage: AssetImage(menuItem
+                                                .image ??
+                                            'assets/images/tuntunan_puja_bhakti.png'),
+                                      ),
+                                      trailing: const Icon(Icons.arrow_forward_ios),
+                                    ),
                                   ),
                                 ))
                             .toList(),

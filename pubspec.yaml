@@ -36,8 +36,10 @@ dependencies:
       ref: main
   flutter_autostart: ^0.0.2
   device_info_plus: ^11.4.0
+  mockito: ^5.5.0
 
 dev_dependencies:
+  bloc_test: ^10.0.0
   bloc_lint: ^0.2.0-dev
   build_runner: ^2.4.15
   flutter_test:

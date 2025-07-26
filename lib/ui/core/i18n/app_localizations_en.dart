@@ -91,7 +91,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationUposathaDescription =>
-      'Let\'s do Uposatha Sila on Uposatha Day!';
+      'Tomorrow is Uposatha Day! Let\'s practice Uposatha Sila on Uposatha Day!';
 
   @override
   String get read => 'Read';

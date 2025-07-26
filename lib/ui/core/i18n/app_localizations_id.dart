@@ -92,7 +92,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notificationUposathaDescription =>
-      'Mari melaksanakan Uposatha Sila di hari Uposatha!';
+      'Besok ada hari Upostaha. Mari mempraktikkan Uposatha Sila di hari Uposatha!';
 
   @override
   String get read => 'Baca';

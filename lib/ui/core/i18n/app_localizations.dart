@@ -251,7 +251,7 @@ abstract class AppLocalizations {
   /// No description provided for @notificationUposathaDescription.
   ///
   /// In en, this message translates to:
-  /// **'Let\'s do Uposatha Sila on Uposatha Day!'**
+  /// **'Tomorrow is Uposatha Day! Let\'s practice Uposatha Sila on Uposatha Day!'**
   String get notificationUposathaDescription;
 
   /// No description provided for @read.

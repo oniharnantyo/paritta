@@ -74,7 +74,7 @@ class SettingScreen extends StatelessWidget {
                   title: Text(i10n.settingCommon),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.language),
+                      leading: const Icon(Icons.language_outlined),
                       title: Text(i10n.settingLanguage),
                       value: Text(languageValue),
                       onPressed: (context) {
@@ -124,7 +124,7 @@ class SettingScreen extends StatelessWidget {
                   title: Text(i10n.settingNotification),
                   tiles: <SettingsTile>[
                     SettingsTile.switchTile(
-                      leading: const Icon(Icons.notifications),
+                      leading: const Icon(Icons.notifications_none_outlined),
                       initialValue:
                           state.appConfig?.notificationUposathaReminder ??
                               false,
@@ -139,7 +139,7 @@ class SettingScreen extends StatelessWidget {
                   title: Text(i10n.settingMiscellaneous),
                   tiles: <SettingsTile>[
                     SettingsTile.navigation(
-                      leading: const Icon(Icons.info),
+                      leading: const Icon(Icons.info_outline),
                       title: Text(i10n.settingAbout),
                       onPressed: (context) => showAboutDialog(
                         context: context,

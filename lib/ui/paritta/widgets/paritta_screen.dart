@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paritta_app/ui/core/app_constants.dart';
 import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -17,7 +18,7 @@ class ParittaScreen extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          expandedHeight: 150,
+          expandedHeight: AppConstants.mobileAppBarHeight + 50,
           flexibleSpace: LayoutBuilder(
             builder: (context, constraints) {
               final isCollapsed = constraints.maxHeight <= kToolbarHeight + 40;
@@ -30,7 +31,7 @@ class ParittaScreen extends StatelessWidget {
                   children: [
                     Text('Paritta', style: textTheme.headlineMedium),
                     Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(AppConstants.mobileHorizontalPadding),
                       child: SearchBar(
                         leading: const Icon(Icons.search),
                         hintText: i10n.parittaSearchParitta,
@@ -39,6 +40,17 @@ class ParittaScreen extends StatelessWidget {
                               .read<ParittaBloc>()
                               .add(MainMenuRequested(search: value));
                         },
+                        shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
+                          (states) {
+                            return RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              side: BorderSide(
+                                color: Theme.of(context).dividerColor.withOpacity(0.5),
+                                width: 1.0,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -74,15 +86,16 @@ class ParittaScreen extends StatelessWidget {
               children: state.menus.map(
                 (menu) {
                   return SliverPadding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppConstants.mobileHorizontalPadding,
+                        vertical: AppConstants.mobileVerticalPadding / 2),
                     sliver: MultiSliver(
                       children: [
                         SliverToBoxAdapter(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Text(
-                              menu.title ?? '',
+                              menu.title,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ),
@@ -101,19 +114,19 @@ class ParittaScreen extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: menu.menus.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final _menu = menu.menus[index];
+                                final menuItem = menu.menus[index];
                                 return Card.outlined(
                                   clipBehavior: Clip.hardEdge,
                                   child: InkWell(
                                     onTap: () {
                                       context
                                           .read<ParittaBloc>()
-                                          .add(LastReadMenuSaved(_menu));
+                                          .add(LastReadMenuSaved(menuItem));
                                       context.push(
                                         Uri(
-                                          path: '/paritta/list/${_menu.id}',
+                                          path: '/paritta/list/${menuItem.id}',
                                           queryParameters: {
-                                            'title': _menu.title
+                                            'title': menuItem.title
                                           },
                                         ).toString(),
                                       );
@@ -135,7 +148,8 @@ class ParittaScreen extends StatelessWidget {
                                                 aspectRatio: 4 / 3,
                                                 // square image
                                                 child: Image.asset(
-                                                  'assets/images/tuntunan_puja_bhakti.png',
+                                                  menuItem.image ??
+                                                      'assets/images/tuntunan_puja_bhakti.png',
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -148,19 +162,19 @@ class ParittaScreen extends StatelessWidget {
                                               children: [
                                                 IconButton.filledTonal(
                                                   onPressed: () {
-                                                    if (_menu.isFavorite ??
+                                                    if (menuItem.isFavorite ??
                                                         false) {
                                                       context
                                                           .read<ParittaBloc>()
                                                           .add(
                                                               FavoriteMenuDeleted(
-                                                                  _menu.id));
+                                                                  menuItem.id));
                                                     } else {
                                                       context
                                                           .read<ParittaBloc>()
                                                           .add(
                                                               FavoriteMenuAdded(
-                                                                  _menu));
+                                                                  menuItem));
                                                     }
                                                   },
                                                   padding: const EdgeInsets
@@ -175,7 +189,7 @@ class ParittaScreen extends StatelessWidget {
                                                     Icons.favorite_border,
                                                     size: 18,
                                                   ),
-                                                  isSelected: _menu.isFavorite,
+                                                  isSelected: menuItem.isFavorite,
                                                   selectedIcon: const Icon(
                                                     Icons.favorite,
                                                     color: Colors.redAccent,
@@ -188,7 +202,7 @@ class ParittaScreen extends StatelessWidget {
                                         ),
                                         ListTile(
                                           title: Text(
-                                            _menu.title ?? '',
+                                            menuItem.title,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                           ),

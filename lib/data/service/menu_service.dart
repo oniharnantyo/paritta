@@ -26,34 +26,37 @@ class MenuService {
       final favoriteMenusJson =
           await sharedPreferences.getString('favoriteMenus');
 
+      // Initialize favoriteMenus as empty map if null
+      var favoriteMenus = <String, dynamic>{};
+      if (favoriteMenusJson != null) {
+        favoriteMenus = jsonDecode(favoriteMenusJson) as Map<String, dynamic>;
+      }
+
       var result = <MenuModel>[];
 
-      if (favoriteMenusJson != null) {
-        final favoriteMenus = jsonDecode(favoriteMenusJson);
+      for (var i = 0; i < menus.length; i++) {
+        var menuItems = <MenuItemModel>[];
+        for (var j = 0; j < menus[i].menus.length; j++) {
+          final menuItem = menus[i].menus[j];
 
-        for (var i = 0; i < menus.length; i++) {
-          var menuItems = <MenuItemModel>[];
-          for (var j = 0; j < menus[i].menus.length; j++) {
-            final _menuItem = menus[i].menus[j];
-
-            if (search != null &&
-                !_menuItem.title.toLowerCase().contains(search.toLowerCase())) {
-              continue;
-            }
-
-            menuItems.add(
-              menus[i].menus[j].copyWith(
-                    isFavorite: (favoriteMenus as Map<String, dynamic>)
-                        .containsKey(_menuItem.id),
-                  ),
-            );
+          // Apply search filter if provided
+          if (search != null &&
+              !menuItem.title.toLowerCase().contains(search.toLowerCase())) {
+            continue;
           }
 
-          if (menuItems.isNotEmpty) {
-            result.add(menus[i].copyWith(menus: menuItems));
-          }
+          menuItems.add(
+            menus[i].menus[j].copyWith(
+                  isFavorite: favoriteMenus.containsKey(menuItem.id),
+                ),
+          );
+        }
+
+        if (menuItems.isNotEmpty) {
+          result.add(menus[i].copyWith(menus: menuItems));
         }
       }
+
       return result;
     } on Exception catch (error) {
       _log.severe(error);

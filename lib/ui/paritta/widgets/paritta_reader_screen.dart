@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:paritta_app/domain/model/paritta.dart';
 import 'package:paritta_app/domain/model/reader_config.dart';
+import 'package:paritta_app/ui/core/app_constants.dart';
 import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_reader_bloc.dart';
 
@@ -49,7 +50,9 @@ class ParittaReaderScreen extends StatelessWidget {
             ],
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsets.symmetric(
+                horizontal: AppConstants.mobileHorizontalPadding,
+                vertical: AppConstants.mobileVerticalPadding / 2),
             sliver: SliverToBoxAdapter(
               child: Builder(
                 builder: (context) {
@@ -79,7 +82,8 @@ class ParittaReaderScreen extends StatelessWidget {
 
   Widget _bottomSheet(ParittaReaderBloc bloc, AppLocalizations i10n) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      padding: const EdgeInsets.fromLTRB(
+          AppConstants.mobileHorizontalPadding, 0, AppConstants.mobileHorizontalPadding, 24),
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -90,9 +94,10 @@ class ParittaReaderScreen extends StatelessWidget {
               i10n.fontSize,
               style: const TextStyle(fontSize: 16),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppConstants.mobileHorizontalPadding),
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

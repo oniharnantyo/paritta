@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paritta_app/ui/core/app_constants.dart';
 import 'package:paritta_app/ui/paritta/bloc/paritta_bloc.dart';
 
 class ParittaListScreen extends StatelessWidget {
@@ -34,7 +35,7 @@ class ParittaListScreen extends StatelessWidget {
               slivers: [
                 SliverAppBar(
                   pinned: true,
-                  expandedHeight: 100,
+                  expandedHeight: AppConstants.mobileAppBarHeight,
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back),
                     onPressed: () => context.pop(),
@@ -47,16 +48,28 @@ class ParittaListScreen extends StatelessWidget {
                 ),
                 if (state.menu?.menus.isNotEmpty ?? false)
                   SliverPadding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: AppConstants.mobileHorizontalPadding,
+                        vertical: AppConstants.mobileVerticalPadding),
                     sliver: SliverList.separated(
-                      separatorBuilder: (_, __) => const Divider(),
+                      separatorBuilder: (_, __) => const SizedBox(height: 16),
                       itemCount: state.menu?.menus.length,
                       itemBuilder: (_, index) {
                         final menu = state.menu?.menus[index];
                         return ListTile(
-                          title: Text(menu?.title ?? ''),
-                          subtitle: Text(menu?.description ?? ''),
+                          title: Text(
+                            menu?.title ?? '',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                          subtitle: Text(
+                            menu?.description ?? '',
+                            style: const TextStyle(
+                              height: 1.2,
+                            ),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
                           onTap: () => context.push(
                             Uri(
                               path: '/paritta/list/$menuId/reader',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lunar/lunar.dart';
+import 'package:paritta_app/ui/core/app_constants.dart';
 import 'package:paritta_app/ui/core/i18n/app_localizations.dart';
 import 'package:paritta_app/ui/home/bloc/home_bloc.dart';
 import 'package:paritta_app/ui/home/cubit/home_tab_cubit.dart';
@@ -29,12 +30,11 @@ class HomeScreen extends StatelessWidget {
           SettingScreen(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: colorScheme.primary,
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.inversePrimary,
-        currentIndex: selectedTab.index,
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: colorScheme.surfaceContainer,
+        indicatorColor: colorScheme.secondaryContainer,
+        selectedIndex: selectedTab.index,
+        onDestinationSelected: (index) {
           switch (index) {
             case 0:
               context.read<HomeBloc>()
@@ -50,21 +50,25 @@ class HomeScreen extends StatelessWidget {
           }
           context.read<HomeTabCubit>().setTab(index);
         },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Icons.home_outlined),
+            selectedIcon: const Icon(Icons.home),
             label: i10n.homeNavbarTitle,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.menu_book),
+          NavigationDestination(
+            icon: const Icon(Icons.menu_book_outlined),
+            selectedIcon: const Icon(Icons.menu_book),
             label: i10n.parittaNavbarTitle,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.map),
+          NavigationDestination(
+            icon: const Icon(Icons.map_outlined),
+            selectedIcon: const Icon(Icons.map),
             label: i10n.guideNavbarTitle,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings),
+          NavigationDestination(
+            icon: const Icon(Icons.settings_outlined),
+            selectedIcon: const Icon(Icons.settings),
             label: i10n.settingNavbarTitle,
           ),
         ],
@@ -81,10 +85,11 @@ class HomePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
     final i10n = AppLocalizations.of(context);
+    final screenWidth = MediaQuery.of(context).size.width;
 
     final lunarDay = Lunar.fromDate(DateTime.now()).getDay();
     final lunarMonthInfo = LunarMonth.fromYm(
-        Lunar.fromDate(DateTime.now()).getYear(), 
+        Lunar.fromDate(DateTime.now()).getYear(),
         Lunar.fromDate(DateTime.now()).getMonth());
     final daysCount = lunarMonthInfo?.getDayCount() ?? 30;
 
@@ -121,6 +126,16 @@ class HomePage extends StatelessWidget {
       lunarIconColor = colorScheme.onSurface;
     }
 
+    // Determine if we're on a tablet (screen width > 600)
+    final isTablet = screenWidth > 600;
+
+    final horizontalPadding = isTablet
+        ? AppConstants.tabletHorizontalPadding
+        : AppConstants.mobileHorizontalPadding;
+    final verticalPadding = isTablet
+        ? AppConstants.tabletVerticalPadding
+        : AppConstants.mobileVerticalPadding;
+
     return BlocListener<HomeBloc, HomeState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
@@ -136,26 +151,33 @@ class HomePage extends StatelessWidget {
         slivers: [
           SliverSafeArea(
             sliver: SliverAppBar(
-              expandedHeight: 80,
+              expandedHeight: isTablet
+                  ? AppConstants.tabletAppBarHeight
+                  : AppConstants.mobileAppBarHeight,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPadding, vertical: verticalPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         i10n.homeDate(DateTime.now()),
-                        style: textTheme.titleMedium,
+                        style: isTablet
+                            ? textTheme.titleLarge
+                            : textTheme.titleMedium,
                       ),
                       const SizedBox(height: 4),
                       Row(
                         children: [
                           Text(
                             '${DateTime.now().year + 544} BE',
-                            style: textTheme.bodyMedium?.copyWith(
+                            style: (isTablet
+                                    ? textTheme.titleMedium
+                                    : textTheme.bodyMedium)
+                                ?.copyWith(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -168,7 +190,10 @@ class HomePage extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text(
                             'Lunar Day $lunarDay',
-                            style: textTheme.bodyMedium?.copyWith(
+                            style: (isTablet
+                                    ? textTheme.titleMedium
+                                    : textTheme.bodyMedium)
+                                ?.copyWith(
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -176,7 +201,9 @@ class HomePage extends StatelessWidget {
                           Icon(
                             lunarIcon,
                             color: lunarIconColor,
-                            size: 14,
+                            size: isTablet
+                                ? AppConstants.tabletIconSize
+                                : AppConstants.mobileIconSize,
                           ),
                         ],
                       ),
@@ -187,66 +214,72 @@ class HomePage extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(horizontalPadding),
             sliver: SliverList(
               delegate: SliverChildListDelegate(
                 [
                   Card(
                     color: colorScheme.primaryContainer,
                     elevation: 1,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 6,
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: BlocBuilder<HomeBloc, HomeState>(
-                              builder: (context, state) {
-                                if (state.status == HomeStatus.loading) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
+                    child: Padding(
+                      padding: EdgeInsets.all(isTablet
+                          ? AppConstants.tabletCardPadding
+                          : AppConstants.mobileCardPadding),
+                      child: BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          if (state.status == HomeStatus.loading) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
 
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '${state.todayQuote?.quote}',
-                                      style: textTheme.titleLarge?.copyWith(
-                                        color: colorScheme.onPrimaryContainer,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        '"${state.todayQuote?.source}"',
-                                        style: textTheme.bodySmall?.copyWith(
-                                          color: colorScheme.onPrimaryContainer,
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${state.todayQuote?.quote}',
+                                style: (isTablet
+                                        ? textTheme.titleLarge
+                                        : textTheme.titleMedium)
+                                    ?.copyWith(
+                                  color: colorScheme.onPrimaryContainer,
+                                  height: 1.4,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  '"${state.todayQuote?.source}"',
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.onPrimaryContainer,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(
+                      height: isTablet
+                          ? AppConstants.tabletLargeSizedBoxHeight
+                          : AppConstants.mobileLargeSizedBoxHeight),
                   Row(
                     children: [
                       Text(
                         i10n.homeLastRead,
-                        style: textTheme.titleMedium,
+                        style: isTablet
+                            ? textTheme.titleLarge
+                            : textTheme.titleMedium,
                       )
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(
+                      height: isTablet
+                          ? AppConstants.tabletSmallSizedBoxHeight
+                          : AppConstants.mobileSmallSizedBoxHeight),
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
                       if (state.status == HomeStatus.loading) {
@@ -266,17 +299,20 @@ class HomePage extends StatelessWidget {
                           onTap: () => context.push(
                             Uri(
                               path: '/paritta/list/${menuItem.id}',
-                              queryParameters: {
-                                'title': menuItem.title
-                              },
+                              queryParameters: {'title': menuItem.title},
                             ).toString(),
                           ),
                           child: ListTile(
-                            title: Text(menuItem.title),
+                            title: Text(
+                              menuItem.title,
+                              style: isTablet ? textTheme.titleMedium : null,
+                            ),
                             leading: CircleAvatar(
                               backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  AssetImage(menuItem.image ?? ''),
+                              backgroundImage: AssetImage(menuItem.image ?? ''),
+                              radius: isTablet
+                                  ? AppConstants.tabletAvatarRadius
+                                  : AppConstants.mobileAvatarRadius,
                             ),
                             trailing: const Icon(Icons.arrow_forward_ios),
                           ),
@@ -284,16 +320,24 @@ class HomePage extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(
+                      height: isTablet
+                          ? AppConstants.tabletMediumSizedBoxHeight
+                          : AppConstants.mobileMediumSizedBoxHeight),
                   Row(
                     children: [
                       Text(
                         i10n.homeFavorite,
-                        style: textTheme.titleMedium,
+                        style: isTablet
+                            ? textTheme.titleLarge
+                            : textTheme.titleMedium,
                       )
                     ],
                   ),
-                  const SizedBox(height: 6),
+                  SizedBox(
+                      height: isTablet
+                          ? AppConstants.tabletSmallSizedBoxHeight
+                          : AppConstants.mobileSmallSizedBoxHeight),
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
                       if (state.status == HomeStatus.loading) {
@@ -317,14 +361,23 @@ class HomePage extends StatelessWidget {
                                       ).toString(),
                                     ),
                                     child: ListTile(
-                                      title: Text(menuItem.title),
+                                      title: Text(
+                                        menuItem.title,
+                                        style: isTablet
+                                            ? textTheme.titleMedium
+                                            : null,
+                                      ),
                                       leading: CircleAvatar(
                                         backgroundColor: Colors.transparent,
                                         backgroundImage: AssetImage(menuItem
                                                 .image ??
                                             'assets/images/tuntunan_puja_bhakti.png'),
+                                        radius: isTablet
+                                            ? AppConstants.tabletAvatarRadius
+                                            : AppConstants.mobileAvatarRadius,
                                       ),
-                                      trailing: const Icon(Icons.arrow_forward_ios),
+                                      trailing:
+                                          const Icon(Icons.arrow_forward_ios),
                                     ),
                                   ),
                                 ))
@@ -336,7 +389,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          const SliverFillRemaining(),
         ],
       ),
     );

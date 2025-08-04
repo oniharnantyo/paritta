@@ -3,6 +3,8 @@ import 'package:paritta_app/domain/model/menu.dart';
 abstract class MenuRepository {
   Future<List<Menu>> getMainMenus({String? search});
 
+  Future<List<String>> getCategoryTitles();
+
   Future<Menu> getMenusByID(String id);
 
   Future<List<MenuItem>> getFavoriteMenus();

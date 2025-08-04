@@ -12,10 +12,10 @@ void main() {
     });
 
     test('Tablet constants have correct values', () {
-      expect(AppConstants.tabletIconSize, 18.0);
+      expect(AppConstants.tabletIconSize, 20.0);
       expect(AppConstants.tabletHorizontalPadding, 32.0);
       expect(AppConstants.tabletVerticalPadding, 24.0);
-      expect(AppConstants.tabletAppBarHeight, 100.0);
+      expect(AppConstants.tabletAppBarHeight, 120.0);
     });
   });
 }

@@ -1,6 +1,6 @@
 class AppConstants {
   // Icon sizes
-  static const double tabletIconSize = 18.0;
+  static const double tabletIconSize = 20.0;
   static const double mobileIconSize = 14.0;
 
   // Padding
@@ -10,19 +10,19 @@ class AppConstants {
   static const double mobileVerticalPadding = 16.0;
 
   // SizedBox heights
-  static const double tabletLargeSizedBoxHeight = 24.0;
+  static const double tabletLargeSizedBoxHeight = 32.0;
   static const double mobileLargeSizedBoxHeight = 16.0;
-  static const double tabletMediumSizedBoxHeight = 18.0;
+  static const double tabletMediumSizedBoxHeight = 24.0;
   static const double mobileMediumSizedBoxHeight = 12.0;
-  static const double tabletSmallSizedBoxHeight = 12.0;
+  static const double tabletSmallSizedBoxHeight = 16.0;
   static const double mobileSmallSizedBoxHeight = 6.0;
 
   // CircleAvatar radius
-  static const double tabletAvatarRadius = 28.0;
+  static const double tabletAvatarRadius = 32.0;
   static const double mobileAvatarRadius = 24.0;
 
   // AppBar height
-  static const double tabletAppBarHeight = 100.0;
+  static const double tabletAppBarHeight = 120.0;
   static const double mobileAppBarHeight = 80.0;
 
   // Card padding

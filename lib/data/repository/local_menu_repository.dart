@@ -42,6 +42,17 @@ class LocalMenuRepository extends MenuRepository {
   }
 
   @override
+  Future<List<String>> getCategoryTitles() async {
+    try {
+      final menus = await _menuService.getMainMenu(null);
+      return menus.map((menu) => menu.title).toList();
+    } on Exception catch (error) {
+      _log.severe(error);
+      rethrow;
+    }
+  }
+
+  @override
   Future<Menu> getMenusByID(String id) async {
     try {
       final menus = await _menuService.getMenu('$id.json');

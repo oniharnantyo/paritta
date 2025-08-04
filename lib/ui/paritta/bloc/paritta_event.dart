@@ -16,6 +16,13 @@ final class MainMenuRequested extends ParittaEvent {
   List<Object?> get props => [search];
 }
 
+final class CategoryTitlesRequested extends ParittaEvent {
+  const CategoryTitlesRequested();
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class FavoriteMenuAdded extends ParittaEvent {
   const FavoriteMenuAdded(this.menuItem);
 

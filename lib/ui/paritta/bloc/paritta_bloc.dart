@@ -16,6 +16,7 @@ class ParittaBloc extends Bloc<ParittaEvent, ParittaState> {
         _menuRepository = menuRepository,
         super(const ParittaState()) {
     on<MainMenuRequested>(_onMainMenuRequested);
+    on<CategoryTitlesRequested>(_onCategoryTitlesRequested);
     on<FavoriteMenuAdded>(_onFavoriteMenuAdded);
     on<FavoriteMenuDeleted>(_onFavoriteMenuDeleted);
     on<LastReadMenuSaved>(_onLastReadMenuSaved);
@@ -35,6 +36,28 @@ class ParittaBloc extends Bloc<ParittaEvent, ParittaState> {
     try {
       final menus = await _menuRepository.getMainMenus(search: event.search);
       emit(state.copyWith(status: ParittaStatus.success, menus: menus));
+    } catch (error) {
+      emit(
+        state.copyWith(
+          status: ParittaStatus.error,
+          error: error.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onCategoryTitlesRequested(
+    CategoryTitlesRequested event,
+    Emitter<ParittaState> emit,
+  ) async {
+    emit(state.copyWith(status: ParittaStatus.loading));
+    try {
+      final menus = await _menuRepository.getMainMenus();
+      final categoryTitles = menus.map((menu) => menu.title).toList();
+      emit(state.copyWith(
+        status: ParittaStatus.success,
+        categoryTitles: categoryTitles,
+      ));
     } catch (error) {
       emit(
         state.copyWith(

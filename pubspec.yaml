@@ -34,6 +34,7 @@ dependencies:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
       path: workmanager
       ref: main
+    version: 0.9.0+3
   flutter_autostart: ^0.0.2
   device_info_plus: ^11.4.0
   mockito: ^5.5.0
